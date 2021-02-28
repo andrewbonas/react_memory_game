@@ -79,12 +79,14 @@ const cardArray = [
 
 const App = () => {
   const [card, setCard] = useState(cardArray);
+  const [score, setScore] = useState(0);
+  const [maxScore, setMaxScore] = useState(0);
 
 
 
   useEffect(() => {
     const handleClick = (e) => {
-      const clickedCard = parseInt(e.target.dataset.id);
+      let clickedCard = parseInt(e.target.dataset.id);
         if( card[clickedCard - 1].clicked === true) {
           gameReset();
         } else {
@@ -95,19 +97,19 @@ const App = () => {
         }
         return card
       }))
+      handleScore(true);
       setCard(old.sort(()=> 0.5 - Math.random()));
-      handleScore();
     };
   }
     document.addEventListener("click", handleClick);
     return () => {
-  document.removeEventListener("click", handleClick);
-};
-},[]);
+    document.removeEventListener("click", handleClick);
+    };
 
+  },[]);
 
 const gameReset=()=> {
-  console.log('end');
+  handleScore(false);
   let old = [...card];
   setCard(old.map((card) => {
     card.clicked = false;
@@ -116,13 +118,39 @@ const gameReset=()=> {
 }
 
 
-  const handleScore = () => {
-console.log('hi');
+  const handleScore = (change) => {
+    if(change === false) {
+      console.log(score);
+      if (maxScore < score) {
+        updateScore(score);
+      }
+      resetScore();
+    } else if (change === true) {
+      addScore();
+    }
   };
+
+const addScore = () => {
+  setScore(score => score + 1);
+}
+
+const resetScore = () => {
+  setScore(0);
+}
+
+const updateScore = () => {
+  setMaxScore(score)
+}
+
+useEffect(() => {
+  console.log(`count changed to ${score}`);
+}, [score]);
 
   return (
     <div>
     <Card/>
+    <div>Score: {score}</div>
+    <div>Max Score: {maxScore}</div>
     <ul>
      {card.map((card) => (
        <li key={card.id} data-id={card.name} data-clicked={card.clicked}>{card.name} {card.clicked.toString()}</li>
