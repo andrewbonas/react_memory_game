@@ -80,18 +80,40 @@ const cardArray = [
 const App = () => {
   const [card, setCard] = useState(cardArray);
 
+
+
   useEffect(() => {
-    const handleClick = () => {
+    const handleClick = (e) => {
+      const clickedCard = parseInt(e.target.dataset.id);
+        if( card[clickedCard - 1].clicked === true) {
+          gameReset();
+        } else {
       let old = [...card];
+      setCard(old.map((card) => {
+        if (card.name === clickedCard) {
+            card.clicked = true;
+        }
+        return card
+      }))
       setCard(old.sort(()=> 0.5 - Math.random()));
-      console.log(old);
       handleScore();
     };
+  }
     document.addEventListener("click", handleClick);
     return () => {
   document.removeEventListener("click", handleClick);
 };
-},[card]);
+},[]);
+
+
+const gameReset=()=> {
+  console.log('end');
+  let old = [...card];
+  setCard(old.map((card) => {
+    card.clicked = false;
+    return card
+  }))
+}
 
 
   const handleScore = () => {
@@ -103,7 +125,7 @@ console.log('hi');
     <Card/>
     <ul>
      {card.map((card) => (
-       <li key={card.id}>{card.name}</li>
+       <li key={card.id} data-id={card.name} data-clicked={card.clicked}>{card.name} {card.clicked.toString()}</li>
      ))}
    </ul>
     </div>
