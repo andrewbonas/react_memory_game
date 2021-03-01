@@ -1,0 +1,19 @@
+.avatar-ctn {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1400px;
+  margin: auto;
+  justify-content: space-around;
+}
+.avatars {
+  display: flex;
+  flex-direction: row;
+  width: 300px;
+  margin: 5px;
+
+}
+
+.avatars:hover {
+  transition: transform .5s ease;
+  transform: scale(1.1);
+}

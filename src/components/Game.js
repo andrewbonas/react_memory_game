@@ -14,6 +14,7 @@ const Game = () => {
 
   useEffect(() => {
     const handleClick = (e) => {
+      console.log(e.target.dataset);
       let clickedCard = parseInt(e.target.dataset.id);
       if (card[clickedCard - 1].clicked === true) {
         gameReset();
@@ -83,13 +84,14 @@ const Game = () => {
     <div>
       <div>Score: {score}</div>
       <div>Max Score: {maxScore}</div>
-      <ul>
+      <div className="avatar-ctn">
         {card.map((card) => (
-          <li key={card.id} data-id={card.name} data-clicked={card.clicked}>
+          <div className="avatars" key={card.id} data-id={card.name} data-clicked={card.clicked}>
+          <img data-id={card.name} data-clicked={card.clicked} src={card.image} alt="Avatar"/>
             {card.name} {card.clicked.toString()}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
