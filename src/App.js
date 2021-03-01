@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import './App.css';
 import Card from './components/Card'
 
@@ -81,8 +81,11 @@ const App = () => {
   const [card, setCard] = useState(cardArray);
   const [score, setScore] = useState(0);
   const [maxScore, setMaxScore] = useState(0);
+  const scoreRef = useRef();
+  const maxScoreRef = useRef();
 
-
+ maxScoreRef.current = maxScore;
+ scoreRef.current = score;
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -106,7 +109,7 @@ const App = () => {
     document.removeEventListener("click", handleClick);
     };
 
-  },[]);
+  },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
 const gameReset=()=> {
   handleScore(false);
@@ -117,12 +120,10 @@ const gameReset=()=> {
   }))
 }
 
-
   const handleScore = (change) => {
     if(change === false) {
-      console.log(score);
-      if (maxScore < score) {
-        updateScore(score);
+      if (maxScoreRef.current < scoreRef.current) {
+        updateScore(scoreRef.current);
       }
       resetScore();
     } else if (change === true) {
@@ -138,13 +139,9 @@ const resetScore = () => {
   setScore(0);
 }
 
-const updateScore = () => {
-  setMaxScore(score)
-}
-
-useEffect(() => {
-  console.log(`count changed to ${score}`);
-}, [score]);
+const updateScore = (score) => {
+    setMaxScore(score);
+  }
 
   return (
     <div>
