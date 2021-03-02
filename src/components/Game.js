@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../styles/Card.css";
+import "../styles/Game.css";
 import cardArray from "./CardData";
 
 const Game = () => {
@@ -82,13 +82,27 @@ const Game = () => {
 
   return (
     <div>
-      <div>Score: {score}</div>
-      <div>Max Score: {maxScore}</div>
+      <header>
+        <h1>React Memory Game </h1>
+        <div className="score-board">
+          <div>Score: {score}</div>
+          <div>Max Score: {maxScore}</div>
+        </div>
+      </header>
       <div className="avatar-ctn">
         {card.map((card) => (
-          <div className="avatars" key={card.id} data-id={card.name} data-clicked={card.clicked}>
-          <img data-id={card.name} data-clicked={card.clicked} src={card.image} alt="Avatar"/>
-            {card.name} {card.clicked.toString()}
+          <div
+            className="avatars"
+            key={card.id}
+            data-id={card.name}
+            data-clicked={card.clicked}
+          >
+            <img
+              data-id={card.name}
+              data-clicked={card.clicked}
+              src={card.image}
+              alt="Avatar"
+            />
           </div>
         ))}
       </div>
