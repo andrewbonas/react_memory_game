@@ -2,6 +2,7 @@
   "name": "memory-card-game",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://andrewbonas.github.io/react_memory_game",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
